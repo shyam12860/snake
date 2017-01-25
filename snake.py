@@ -1,7 +1,7 @@
 class Snake(object):
 
     def __init__(self):
-        self.x = 0
+        self.x = 2 
         self.y = 0
         self.dx = 1
         self.dy = 0
@@ -10,9 +10,12 @@ class Snake(object):
     def move(self):
         self.x += self.dx
         self.y += self.dy
-        
         del self.body[0]
+
+        if (self.x, self.y) in self.body:
+            return False
         self.body.append((self.x, self.y))
+        return True
 
     def grow(self):
         if len(self.body) == 1:

@@ -4,9 +4,8 @@ import snake
 from random import randint
 
 def is_coinciding(arr, point):
-    for a in arr:
-        if a == point:
-            return True
+    if point in arr:
+        return True
     return False
 
 pygame.init()
@@ -17,6 +16,7 @@ RED = (255, 0, 0)
 
 size = [600, 600]
 screen = pygame.display.set_mode(size)
+
 sq = 20
 pygame.display.set_caption("Snake")
 
@@ -31,7 +31,7 @@ food = get_food()
 
 while not done:
     # limit to 10 times per second. Otherwise keeps updating and moving. Uses up cpu power too. 
-    clock.tick(10)
+    clock.tick(5)
 
     for event in pygame.event.get():
         if event == QUIT:
@@ -39,18 +39,21 @@ while not done:
             sys.exit()
 
         if event.type == KEYDOWN:
-            if event.key == K_LEFT:
+            if event.key == K_LEFT and s.dx != 1 and s.dy != 0:
                 s.dx, s.dy = -1, 0
-            if event.key == K_RIGHT:
+            if event.key == K_RIGHT and s.dx != -1 and s.dy != 0:
                 s.dx, s.dy = 1, 0
-            if event.key == K_UP:
+            if event.key == K_UP and s.dy != 1 and s.dx != 0:
                 s.dx, s.dy = 0, -1
-            if event.key == K_DOWN:
+            if event.key == K_DOWN and s.dy != -1 and s.dx != 0:
                 s.dx, s.dy = 0, 1
 
     screen.fill(BLACK)
-    
-    s.move()
+    print s.dx, s.dy 
+    if not s.move():
+        print "--"
+        pygame.time.delay(5000)
+    print s.dx, s.dy
     # draw snake
     for cell in s.body[-1::-1]:
         pygame.draw.rect(screen, WHITE, [cell[0]*sq, cell[1]*sq, 20, 20])
