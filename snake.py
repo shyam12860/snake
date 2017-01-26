@@ -1,11 +1,12 @@
 class Snake(object):
 
     def __init__(self):
-        self.x = 2 
+        self.x = 0 
         self.y = 0
         self.dx = 1
         self.dy = 0
-        self.body = [(0,0), (1,0), (2, 0)] 
+        self.body = [(self.x, self.y)] 
+        self.score = 0
 
     def move(self):
         self.x += self.dx
