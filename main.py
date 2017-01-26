@@ -29,15 +29,16 @@ def get_food():
 
 food = get_food()
 
+# game update loop
 while s.score >= 0:
-    # limit to 10 times per second. Otherwise keeps updating and moving. Uses up cpu power too. 
+    # limits loop to 10 times per second. Otherwise keeps updating and moving. Uses up cpu power too. 
     clock.tick(10)
 
     for event in pygame.event.get():
         if event == QUIT:
             pygame.quit()
             sys.exit()
-
+         
         if event.type == KEYDOWN:
             if event.key == K_LEFT and s.dx != 1:
                 s.dx, s.dy = -1, 0
@@ -58,7 +59,8 @@ while s.score >= 0:
     # draw snake
     for cell in s.body[-1::-1]:
         pygame.draw.rect(screen, WHITE, [cell[0]*sq, cell[1]*sq, 20, 20])
-    # check and draw food    
+
+    # check if food has been eaten and draw food    
     if s.score >= 0 and (s.x*sq, s.y*sq) == food:
         s.score += 1
         s.grow()
